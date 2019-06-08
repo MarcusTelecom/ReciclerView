@@ -1,5 +1,6 @@
 package telecom.marcus.reciclerview;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         holder.title.setText(article.getTitle());
         holder.desc.setText(article.getAuthor());
+
+        new DownloadImageTask(holder.featuredImage).execute(article.getEnclosure().getUrl());
+        holder.btnLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, article.getSource());
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
 
     }
 
